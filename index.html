@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Internet Pollue-t-il Plus Qu'on Le Pense ?</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1209;
+    --paper: #f5efe3;
+    --paper-dark: #ede4d0;
+    --accent: #c0392b;
+    --accent-light: #e74c3c;
+    --green: #2e7d32;
+    --muted: #7a6e5f;
+    --rule: #b8a990;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.8;
+    font-size: 18px;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 27px,
+        rgba(184,169,144,0.18) 27px,
+        rgba(184,169,144,0.18) 28px
+      );
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    height: 52px;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  nav .brand { font-family: 'Playfair Display', serif; font-size: 1rem; letter-spacing: 0.06em; font-weight: 700; }
+  nav .date { opacity: 0.55; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 8vw, 8rem);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 70% 50%, #2e1a0a 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-kicker {
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .hero-kicker::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 2px;
+    background: var(--accent-light);
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 6vw, 5.2rem);
+    font-weight: 900;
+    line-height: 1.08;
+    max-width: 820px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: #d4a96a;
+  }
+  .hero-sub {
+    margin-top: 2rem;
+    max-width: 520px;
+    font-size: 1.05rem;
+    opacity: 0.75;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-meta {
+    margin-top: 3rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    display: flex;
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── LAYOUT ── */
+  .wrapper {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 clamp(1.5rem, 5vw, 3rem);
+  }
+
+  /* ── STAT BAND ── */
+  .stat-band {
+    background: var(--accent);
+    color: #fff;
+    padding: 2.5rem clamp(1.5rem, 5vw, 4rem);
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    display: block;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-top: 0.4rem;
+  }
+
+  /* ── ARTICLE BODY ── */
+  article {
+    padding: 4rem 0;
+  }
+
+  .lead {
+    font-size: 1.22rem;
+    font-style: italic;
+    color: var(--muted);
+    border-left: 4px solid var(--accent);
+    padding-left: 1.4rem;
+    margin-bottom: 3rem;
+    line-height: 1.75;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 700;
+    margin: 3.5rem 0 1.2rem;
+    line-height: 1.25;
+    position: relative;
+  }
+  h2::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: var(--accent);
+    margin-top: 0.6rem;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 2.5rem 0 0.8rem;
+    font-style: italic;
+  }
+
+  p { margin-bottom: 1.5rem; }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2.5rem 2.8rem;
+    margin: 3rem -2rem;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%);
+  }
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-style: italic;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .pull-quote .attr {
+    margin-top: 1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    font-style: normal;
+    font-family: 'Source Serif 4', serif;
+  }
+
+  /* ── DATA VIZ: BAR CHART ── */
+  .chart-block {
+    background: var(--paper-dark);
+    border: 1px solid var(--rule);
+    padding: 2rem 2rem 1.5rem;
+    margin: 2.5rem 0;
+    border-radius: 2px;
+  }
+  .chart-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    font-family: 'Source Serif 4', serif;
+  }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+  .bar-label {
+    width: 160px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-align: right;
+    flex-shrink: 0;
+    font-family: 'Source Serif 4', serif;
+  }
+  .bar-track {
+    flex: 1;
+    height: 22px;
+    background: rgba(0,0,0,0.08);
+    position: relative;
+    overflow: visible;
+  }
+  .bar-fill {
+    height: 100%;
+    background: var(--accent);
+    position: relative;
+    transition: width 1.2s cubic-bezier(.4,0,.2,1);
+    animation: growBar 1.4s cubic-bezier(.4,0,.2,1) both;
+  }
+  @keyframes growBar {
+    from { width: 0 !important; }
+  }
+  .bar-fill.green { background: var(--green); }
+  .bar-val {
+    position: absolute;
+    right: -42px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .chart-source {
+    margin-top: 1.2rem;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    font-style: italic;
+  }
+
+  /* ── COMPARISON CARDS ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin: 2.5rem 0;
+  }
+  .compare-card {
+    background: var(--paper-dark);
+    border: 1px solid var(--rule);
+    padding: 1.6rem;
+    position: relative;
+  }
+  .compare-card .icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+  .compare-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .compare-card p { font-size: 0.88rem; margin: 0; line-height: 1.6; color: var(--muted); }
+  .compare-card.bad { border-top: 3px solid var(--accent); }
+  .compare-card.good { border-top: 3px solid var(--green); }
+
+  /* ── SECTION DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 3rem 0;
+    color: var(--rule);
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+  .divider-sym { font-size: 1.2rem; }
+
+  /* ── TIPS BOX ── */
+  .tips-box {
+    border: 2px solid var(--ink);
+    padding: 2rem 2.2rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .tips-box::before {
+    content: 'À FAIRE';
+    position: absolute;
+    top: -0.65rem;
+    left: 1.4rem;
+    background: var(--paper);
+    padding: 0 0.5rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    font-family: 'Source Serif 4', serif;
+    color: var(--green);
+    font-weight: 600;
+  }
+  .tips-box h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--green);
+  }
+  .tips-box ul { list-style: none; padding: 0; }
+  .tips-box li {
+    padding: 0.5rem 0;
+    padding-left: 1.8rem;
+    position: relative;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    border-bottom: 1px solid var(--paper-dark);
+  }
+  .tips-box li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-weight: 700;
+  }
+  .tips-box li:last-child { border-bottom: none; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3rem clamp(1.5rem, 5vw, 4rem);
+    text-align: center;
+  }
+  footer .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  footer p {
+    font-size: 0.8rem;
+    opacity: 0.4;
+    letter-spacing: 0.08em;
+    margin: 0;
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 640px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .pull-quote { margin: 2rem -1rem; padding: 2rem 1.5rem; }
+    .bar-label { width: 100px; font-size: 0.75rem; }
+    .stat-band { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">Numérique & Planète</span>
+  <span class="date">Mai 2026 · Enquête</span>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-kicker">Enquête environnement</div>
+  <h1>Internet pollue-t-il <em>vraiment</em><br>plus qu'on ne le pense ?</h1>
+  <p class="hero-sub">Derrière chaque clic, chaque e-mail, chaque stream vidéo se cache une infrastructure colossale qui consomme, chauffe, et émet des gaz à effet de serre — souvent à notre insu.</p>
+  <div class="hero-meta">
+    <span>Par la rédaction</span>
+    <span>10 min de lecture</span>
+    <span>Sources scientifiques</span>
+  </div>
+</header>
+
+<!-- STAT BAND -->
+<div class="stat-band">
+  <div class="stat">
+    <span class="stat-num">4%</span>
+    <span class="stat-label">des émissions mondiales de CO₂</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">3,5 g</span>
+    <span class="stat-label">CO₂ par e-mail avec pièce jointe</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">1 h</span>
+    <span class="stat-label">de streaming = 36 g CO₂</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">2×</span>
+    <span class="stat-label">plus que l'aviation mondiale</span>
+  </div>
+</div>
+
+<!-- ARTICLE -->
+<div class="wrapper">
+<article>
+
+  <p class="lead fade-in">
+    On s'imagine souvent Internet comme un espace immatériel, éthéré, propre. En réalité, le « cloud » repose sur des millions de serveurs physiques, consommant une énergie considérable. La pollution numérique est invisible — mais bien réelle.
+  </p>
+
+  <!-- SECTION 1 -->
+  <h2 class="fade-in">Le mythe du numérique « vert »</h2>
+
+  <p class="fade-in">Pendant des années, on nous a vendu le passage au numérique comme une révolution écologique. Finies les tonnes de papier, finis les déplacements superflus. La réalité est plus nuancée — et souvent bien plus inquiétante.</p>
+
+  <p class="fade-in">Selon les dernières estimations, le secteur numérique mondial représente entre <strong>3,5 % et 4 %</strong> des émissions mondiales de gaz à effet de serre. C'est plus que l'ensemble de l'industrie aéronautique civile. Et la tendance est à la hausse : d'ici 2030, cette part pourrait atteindre <strong>8 %</strong> si rien ne change.</p>
+
+  <div class="pull-quote fade-in">
+    <p>« Le numérique n'est pas immatériel. C'est du béton, du cuivre, du silicium, et des milliards de kilowattheures brûlés chaque seconde. »</p>
+    <p class="attr">— Frédéric Bordage, expert en numérique responsable</p>
+  </div>
+
+  <!-- BAR CHART 1 -->
+  <div class="chart-block fade-in">
+    <div class="chart-title">Empreinte carbone de quelques usages numériques (en g CO₂ équivalent)</div>
+    <div class="bar-row">
+      <div class="bar-label">Requête IA</div>
+      <div class="bar-track"><div class="bar-fill" style="width:82%"><span class="bar-val">~10 g</span></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">E-mail pièce jointe</div>
+      <div class="bar-track"><div class="bar-fill" style="width:70%"><span class="bar-val">3,5 g</span></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Recherche Google</div>
+      <div class="bar-track"><div class="bar-fill" style="width:14%"><span class="bar-val">0,3 g</span></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Streaming HD (1h)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:95%"><span class="bar-val">36 g</span></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Visio-conférence (1h)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:55%"><span class="bar-val">~150 g</span></div></div>
+    </div>
+    <div class="chart-source">Sources : ADEME, The Shift Project, Carbon Trust (2024)</div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <h2 class="fade-in">Ce qui consomme vraiment</h2>
+
+  <h3 class="fade-in">Les data centers : les géants cachés</h3>
+  <p class="fade-in">Les centres de données hébergent les applications, les e-mails, les réseaux sociaux et les vidéos que nous consommons chaque jour. Ces bâtiments colossaux ont besoin d'électricité en continu — non seulement pour faire tourner les serveurs, mais aussi pour les refroidir. Certains data centers consomment autant d'électricité qu'une ville moyenne.</p>
+
+  <h3 class="fade-in">La vidéo : premier poste d'émissions</h3>
+  <p class="fade-in">Netflix, YouTube, TikTok, les réunions Zoom... la vidéo représente à elle seule plus de <strong>80 % du trafic mondial</strong> sur Internet. Chaque heure de streaming consomme de l'énergie à trois niveaux : le serveur qui diffuse, le réseau qui transporte, et votre terminal qui reçoit.</p>
+
+  <h3 class="fade-in">L'intelligence artificielle : la bombe à retardement</h3>
+  <p class="fade-in">Les modèles d'IA générative comme ChatGPT ou Gemini ont révolutionné nos usages — mais à quel prix ? Une seule requête à un grand modèle de langage consomme jusqu'à <strong>10 fois plus d'énergie</strong> qu'une recherche Google classique. Entraîner un modèle comme GPT-4 aurait émis autant de CO₂ que <strong>cinq voitures sur toute leur durée de vie</strong>.</p>
+
+  <div class="divider"><span class="divider-sym">✦</span></div>
+
+  <!-- SECTION 3 -->
+  <h2 class="fade-in">Les trois piliers de la pollution numérique</h2>
+
+  <div class="compare-grid fade-in">
+    <div class="compare-card bad">
+      <span class="icon">🏭</span>
+      <h4>La fabrication</h4>
+      <p>C'est souvent la phase la plus polluante. Fabriquer un smartphone nécessite plus de 70 métaux et minéraux rares, extraits dans des conditions souvent catastrophiques pour l'environnement.</p>
+    </div>
+    <div class="compare-card bad">
+      <span class="icon">⚡</span>
+      <h4>L'usage</h4>
+      <p>Chaque utilisation mobilise des serveurs, des réseaux, de l'énergie. L'usage quotidien et répété finit par représenter une part non négligeable de l'empreinte totale.</p>
+    </div>
+    <div class="compare-card bad">
+      <span class="icon">🗑️</span>
+      <h4>La fin de vie</h4>
+      <p>55 millions de tonnes de déchets électroniques sont générées chaque année dans le monde. Moins de 20 % sont correctement recyclées. Le reste contamine sols et nappes phréatiques.</p>
+    </div>
+    <div class="compare-card good">
+      <span class="icon">☀️</span>
+      <h4>Les progrès réels</h4>
+      <p>Les data centers sont de plus en plus alimentés aux énergies renouvelables. Google, Microsoft et Apple ont des objectifs ambitieux de neutralité carbone d'ici 2030.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <h2 class="fade-in">Le rebound effect : quand l'efficacité s'annule</h2>
+
+  <p class="fade-in">L'un des paradoxes les plus frustrants du numérique est l'effet rebond. Oui, les appareils sont plus efficaces énergétiquement qu'il y a dix ans. Mais nous en utilisons <em>beaucoup plus</em>, et nous les utilisons <em>beaucoup plus longtemps</em>. L'efficacité individuelle est absorbée par la croissance des usages.</p>
+
+  <!-- BAR CHART 2 -->
+  <div class="chart-block fade-in">
+    <div class="chart-title">Croissance du trafic Internet mondial (en exaoctets/mois)</div>
+    <div class="bar-row">
+      <div class="bar-label">2015</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:10%"><span class="bar-val">72 EB</span></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">2018</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:28%"><span class="bar-val">211 EB</span></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">2022</div>
+      <div class="bar-track"><div class="bar-fill" style="width:62%"><span class="bar-val">466 EB</span></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">2025</div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%"><span class="bar-val">~780 EB</span></div></div>
+    </div>
+    <div class="chart-source">Sources : Cisco Annual Internet Report, IEA (2025)</div>
+  </div>
+
+  <div class="divider"><span class="divider-sym">✦</span></div>
+
+  <!-- SECTION 5 -->
+  <h2 class="fade-in">Que peut-on faire concrètement ?</h2>
+
+  <p class="fade-in">La pollution numérique n'est pas une fatalité. Des gestes simples, à l'échelle individuelle et collective, permettent de réduire significativement son impact.</p>
+
+  <div class="tips-box fade-in">
+    <h4>Réduire son empreinte numérique au quotidien</h4>
+    <ul>
+      <li>Prolonger la durée de vie de vos appareils : chaque année supplémentaire d'utilisation divise l'impact fabrication</li>
+      <li>Préférer le Wi-Fi à la 4G/5G : la consommation réseau est jusqu'à 23× inférieure</li>
+      <li>Réduire la qualité vidéo quand ce n'est pas nécessaire (passer de 4K à 720p réduit l'impact de 86 %)</li>
+      <li>Nettoyer régulièrement ses boîtes mail et supprimer les fichiers cloud inutiles</li>
+      <li>Éviter les achats de nouveaux appareils inutiles ; privilégier le reconditionné</li>
+      <li>Désactiver les notifications push et le chargement automatique des vidéos</li>
+      <li>Utiliser des moteurs de recherche éco-responsables comme Ecosia ou Lilo</li>
+    </ul>
+  </div>
+
+  <!-- CONCLUSION -->
+  <h2 class="fade-in">Conclusion : l'invisibilité n'est pas l'innocence</h2>
+
+  <p class="fade-in">Internet n'est pas une bulle immatérielle flottant au-dessus de nos têtes. C'est une infrastructure physique massive, énergivore, et minéralophage. Son empreinte environnementale réelle est souvent sous-estimée — parfois délibérément — par les acteurs qui profitent de notre consommation numérique croissante.</p>
+
+  <p class="fade-in">Cela ne signifie pas qu'il faille débrancher — le numérique a aussi des vertus environnementales réelles (télétravail, dématérialisation de services, optimisation logistique). Mais consommer de façon lucide, informée, et sobre reste la première des responsabilités. Parce que dans le monde numérique comme ailleurs, il n'y a pas de ressources infinies.</p>
+
+  <div class="pull-quote fade-in">
+    <p>« La sobriété numérique n'est pas un retour en arrière. C'est choisir de mettre notre technologie au service de la vie, et non l'inverse. »</p>
+    <p class="attr">— Gauthier Roussilhe, chercheur en design et sobriété numérique</p>
+  </div>
+
+</article>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Numérique & Planète</div>
+  <p>Une publication indépendante sur l'impact environnemental du monde connecté — 2026</p>
+</footer>
+
+<script>
+  // Intersection Observer for fade-in animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 60 * i);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
